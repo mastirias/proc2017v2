@@ -10,11 +10,9 @@ using System.Windows.Forms;
 
 namespace Europe_airlines
 {
-    //To do: read button 5 click event
-    //To do: fix the autoincremention for plane ID
-    //To do: report buttons must be implemented
     public partial class Form2 : Form
     {
+        //declare variables
         public string name;
         public int count = 100;
         private Airport airport;
@@ -37,10 +35,11 @@ namespace Europe_airlines
 
         private void Form2_Load(object sender, EventArgs e)
         {
+            //fills the comboBox with all available destinations
             foreach (Airport ap in form.myAirport)
             {
-                this.cBox_desiredDestination.Items.Add(ap.name);
-               
+                if (ap.name != lb_AirportLocation.Text)
+                this.cBox_desiredDestination.Items.Add(ap.name);     
             }
             
         }
@@ -54,19 +53,16 @@ namespace Europe_airlines
 
         private void AddAirplane_Click(object sender, EventArgs e)
         {
-           
-            airport.AddcurrentAirplane( textBox2.Text.ToString());
+           //Adds the airplane to the Database and updates the list
+            airport.AddcurrentAirplane(tb_CompanyName.Text.ToString());
+            airport.currentAirplanesInAirport = airport.GetCurrentAirplanes(airport.name);
             this.lb_Airplanes.Items.Clear();
-            foreach (Airplane a in airport.currentAirplanes)
+            foreach (Airplane a in airport.currentAirplanesInAirport)
             {
                 lb_Airplanes.Items.Add("ID: "+ a.Id+" Company name: " +a.CompanyName);
             }
              
-            NotifyChange();
-            //AddcurrentAirplane(count, textBox2.Text);
-            //listBox1.Items.Add("ID: " + count + " -- Name: " + textBox2.Text);
-            //textBox2.Clear();
-           
+            NotifyChange();  
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -75,12 +71,13 @@ namespace Europe_airlines
         }
 
         /// <summary>
-        /// notifies the update of the number of airplanes 
+        /// Notifies the update of the number of airplanes 
         /// </summary>
         public void NotifyChange()
         {
             int value = airport.GetNumberOfAirplanes(" ");
             form.NotifyAll(value);
+            
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -88,12 +85,13 @@ namespace Europe_airlines
             
         }
 
+        //Event for "Remove Airplane" button
         private void button4_Click(object sender, EventArgs e)
         {
             if (airport.RemoveAirplane(int.Parse(tb_removeAirplanes.Text)))
             {
                 lb_Airplanes.Items.Clear();
-                foreach (Airplane a in airport.currentAirplanes)
+                foreach (Airplane a in airport.currentAirplanesInAirport)
                 {
                     lb_Airplanes.Items.Add("ID: " + a.Id + " Company name: " + a.CompanyName);
                 }
@@ -103,11 +101,12 @@ namespace Europe_airlines
                 MessageBox.Show("No plane with that ID was found");
             }
         }
-
+       
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //shows the id of the selected airplane 
             string fullText = lb_Airplanes.SelectedItem.ToString();
-            string id=fullText.Substring(3, 4);
+            string id = fullText.Substring(4, 6); 
             tb_removeAirplanes.Text = id;
 
         }
@@ -130,11 +129,11 @@ namespace Europe_airlines
         public void SetAirport(Airport a)
         {
             this.airport = a;
-            AirportLocation.Text = this.airport.name;
-            if (this.airport.currentAirplanes != null)
+            lb_AirportLocation.Text = this.airport.name;
+            if (this.airport.currentAirplanesInAirport != null)
             {
                 this.lb_Airplanes.Items.Clear();
-                foreach (Airplane ap in airport.currentAirplanes)
+                foreach (Airplane ap in airport.currentAirplanesInAirport)
                 {
                     lb_Airplanes.Items.Add("ID: " + ap.Id + " Company name: " + ap.CompanyName);
                 }
@@ -143,7 +142,7 @@ namespace Europe_airlines
 
         private void button3_Click(object sender, EventArgs e)
         {
-            foreach ( Airplane a in airport.currentAirplanes)
+            foreach ( Airplane a in airport.currentAirplanesInAirport)
             {
                 lb_Airplanes.Items.Add(a.Id);
             }
@@ -152,6 +151,30 @@ namespace Europe_airlines
         private void AirportLocation_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void tb_CompanyName_Click(object sender, EventArgs e)
+        {
+            tb_CompanyName.Clear();
+
+        }
+
+        private void cBox_desiredDestination_Click(object sender, EventArgs e)
+        {
+            cBox_desiredDestination.Text = "";
+        }
+
+        private void btn_reportStorm_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure that you want to close the current airport, due to a storm report?", "Report Storm", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                //do something
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
         }
     }
             
