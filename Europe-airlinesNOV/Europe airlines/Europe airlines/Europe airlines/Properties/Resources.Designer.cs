@@ -73,6 +73,16 @@ namespace Europe_airlines.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap airport {
+            get {
+                object obj = ResourceManager.GetObject("airport", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Europe_map {
             get {
                 object obj = ResourceManager.GetObject("Europe_map", resourceCulture);

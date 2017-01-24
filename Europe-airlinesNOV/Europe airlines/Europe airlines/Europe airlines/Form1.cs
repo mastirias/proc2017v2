@@ -36,7 +36,7 @@ namespace Europe_airlines
 
         private void airport_click(object sender, EventArgs e)
         {
-            var airport = findAirport(((Button)sender).Text);
+            var airport = findAirport(((PictureBox)sender).Text);
             otherForm.SetAirport(airport, this.myAirport.Where(x => x.name != airport.name).ToList());
             otherForm.Show();
         }
@@ -45,7 +45,8 @@ namespace Europe_airlines
         {
             foreach (Airport port in myAirport)
             {
-                Button c = new Button();
+                PictureBox c = new PictureBox();
+                c.Image = Europe_airlines.Properties.Resources.airport;
                 c.Location = new Point(port.x, port.y);
                 c.Text = port.name;
                 c.Name = port.name;
@@ -53,12 +54,11 @@ namespace Europe_airlines
                 c.Tag = index;
                 this.Controls.Add(c);
                 Label lblCount = new Label();
-                lblCount.Location = new Point(port.x + 10, port.y + 10);
-                lblCount.Text = port.name;
-                lblCount.Name = port.name;
-
+                lblCount.Location = new Point(port.x + 5, port.y);
+                lblCount.Text = Convert.ToString(port.GetNumberOfAirplanes(port.name));
+                lblCount.Width = 10;
                 this.Controls.Add(lblCount);
-
+                lblCount.BringToFront();
                 index++;
             }
         }
@@ -81,7 +81,6 @@ namespace Europe_airlines
         /// </summary>
        public void NotifyAll(int num)
         {
-            label1.Text = num.ToString();
         }
 
         public void SetAirport()
@@ -196,6 +195,10 @@ namespace Europe_airlines
                     timer.Stop();
                 }
             };
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
         }
     }
 }
