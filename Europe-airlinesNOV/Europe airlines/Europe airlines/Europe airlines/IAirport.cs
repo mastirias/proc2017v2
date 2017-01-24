@@ -9,7 +9,6 @@ namespace Europe_airlines
     public interface IAirport
     {
         int GetNumberOfAirplanes(string airportname);
-        //bool CheckAirplane(int createdid);
         void AddcurrentAirplane(string companyName);
         bool RemoveAirplane(int id);
         void NotifyChange();

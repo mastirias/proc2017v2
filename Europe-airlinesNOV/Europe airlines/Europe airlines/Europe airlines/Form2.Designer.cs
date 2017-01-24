@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.AirportLocation = new System.Windows.Forms.Label();
+            this.lb_AirportLocation = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btn_reportStorm = new System.Windows.Forms.Button();
@@ -37,24 +37,23 @@
             this.btn_removeAirplane = new System.Windows.Forms.Button();
             this.btn_SetDestination = new System.Windows.Forms.Button();
             this.lb_Airplanes = new System.Windows.Forms.ListBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tb_CompanyName = new System.Windows.Forms.TextBox();
             this.tb_removeAirplanes = new System.Windows.Forms.TextBox();
             this.cBox_desiredDestination = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.lbAirplanes = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // AirportLocation
+            // lb_AirportLocation
             // 
-            this.AirportLocation.AutoSize = true;
-            this.AirportLocation.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AirportLocation.Location = new System.Drawing.Point(12, 9);
-            this.AirportLocation.Name = "AirportLocation";
-            this.AirportLocation.Size = new System.Drawing.Size(197, 31);
-            this.AirportLocation.TabIndex = 0;
-            this.AirportLocation.Text = "AirportLocation";
-            this.AirportLocation.Click += new System.EventHandler(this.AirportLocation_Click);
+            this.lb_AirportLocation.AutoSize = true;
+            this.lb_AirportLocation.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_AirportLocation.Location = new System.Drawing.Point(12, 9);
+            this.lb_AirportLocation.Name = "lb_AirportLocation";
+            this.lb_AirportLocation.Size = new System.Drawing.Size(197, 31);
+            this.lb_AirportLocation.TabIndex = 0;
+            this.lb_AirportLocation.Text = "AirportLocation";
+            this.lb_AirportLocation.Click += new System.EventHandler(this.AirportLocation_Click);
             // 
             // label3
             // 
@@ -82,6 +81,7 @@
             this.btn_reportStorm.TabIndex = 4;
             this.btn_reportStorm.Text = "Report storm";
             this.btn_reportStorm.UseVisualStyleBackColor = true;
+            this.btn_reportStorm.Click += new System.EventHandler(this.btn_reportStorm_Click);
             // 
             // btn_reportConstruction
             // 
@@ -131,27 +131,22 @@
             this.lb_Airplanes.TabIndex = 9;
             this.lb_Airplanes.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
-            // textBox1
+            // tb_CompanyName
             // 
-            this.textBox1.Location = new System.Drawing.Point(280, 105);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 10;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(396, 104);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 11;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.tb_CompanyName.Location = new System.Drawing.Point(279, 107);
+            this.tb_CompanyName.Name = "tb_CompanyName";
+            this.tb_CompanyName.Size = new System.Drawing.Size(112, 20);
+            this.tb_CompanyName.TabIndex = 11;
+            this.tb_CompanyName.Text = "Company Name";
+            this.tb_CompanyName.Click += new System.EventHandler(this.tb_CompanyName_Click);
+            this.tb_CompanyName.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // tb_removeAirplanes
             // 
+            this.tb_removeAirplanes.Enabled = false;
             this.tb_removeAirplanes.Location = new System.Drawing.Point(280, 249);
             this.tb_removeAirplanes.Name = "tb_removeAirplanes";
-            this.tb_removeAirplanes.Size = new System.Drawing.Size(100, 20);
+            this.tb_removeAirplanes.Size = new System.Drawing.Size(111, 20);
             this.tb_removeAirplanes.TabIndex = 12;
             // 
             // cBox_desiredDestination
@@ -159,9 +154,11 @@
             this.cBox_desiredDestination.FormattingEnabled = true;
             this.cBox_desiredDestination.Location = new System.Drawing.Point(280, 354);
             this.cBox_desiredDestination.Name = "cBox_desiredDestination";
-            this.cBox_desiredDestination.Size = new System.Drawing.Size(100, 21);
+            this.cBox_desiredDestination.Size = new System.Drawing.Size(111, 21);
             this.cBox_desiredDestination.TabIndex = 13;
+            this.cBox_desiredDestination.Text = "Choose destination";
             this.cBox_desiredDestination.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.cBox_desiredDestination.Click += new System.EventHandler(this.cBox_desiredDestination_Click);
             // 
             // label5
             // 
@@ -190,8 +187,7 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cBox_desiredDestination);
             this.Controls.Add(this.tb_removeAirplanes);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tb_CompanyName);
             this.Controls.Add(this.lb_Airplanes);
             this.Controls.Add(this.btn_SetDestination);
             this.Controls.Add(this.btn_removeAirplane);
@@ -201,7 +197,7 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lbAirplanes);
-            this.Controls.Add(this.AirportLocation);
+            this.Controls.Add(this.lb_AirportLocation);
             this.Name = "Form2";
             this.Text = "Form2";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form2_FormClosing_1);
@@ -213,7 +209,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label AirportLocation;
+        private System.Windows.Forms.Label lb_AirportLocation;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btn_reportStorm;
@@ -222,8 +218,7 @@
         private System.Windows.Forms.Button btn_removeAirplane;
         private System.Windows.Forms.Button btn_SetDestination;
         private System.Windows.Forms.ListBox lb_Airplanes;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tb_CompanyName;
         private System.Windows.Forms.TextBox tb_removeAirplanes;
         private System.Windows.Forms.ComboBox cBox_desiredDestination;
         private System.Windows.Forms.Label label5;

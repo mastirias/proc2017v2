@@ -73,10 +73,9 @@ namespace Europe_airlines
         /// <summary>
         ///  Updates the value of the label containg the information about the no of planes of each airport 
         /// </summary>
-        public void NotifyAll(int num)
+       public void NotifyAll(int num)
         {
             label1.Text = num.ToString();
-
         }
 
         public void SetAirport()

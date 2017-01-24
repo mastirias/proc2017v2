@@ -11,11 +11,16 @@ namespace Europe_airlines
         public string name; //the name of the airport
         public string ClosestAirport; //the name of the closest airport
         public int x, y; //the coordinates
-        public List<Airplane> currentAirplanes = new List<Airplane>(); // the list of all current airplanes
-        public List<Airplane> allAirplanes = new List<Airplane>(); // the list of all airplanes
-        DatabaseHelper myHelper = new DatabaseHelper(); //the connection 
-
-        public List<Airplane> incomingAirplanes = new List<Airplane>();
+        public List<Airplane> currentAirplanesInAirport; //the list of all airplanes in the current airport
+        public List<Airplane> currentAirplanesAndArriving; //the list of the current airplanes and the arriving airplanes
+        DatabaseHelper myHelper = new DatabaseHelper(); //the connection with the DataBase
+        /// <summary>
+        /// constructor of the Airport class
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="closeOne"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
 
         public Airport(string name, string closeOne,int x , int y)
         {
@@ -23,7 +28,9 @@ namespace Europe_airlines
             this.ClosestAirport = closeOne;
             this.x = x;
             this.y = y;
-            currentAirplanes = myHelper.GetAllAirplanes(name);
+            currentAirplanesInAirport = new List<Airplane>();
+            currentAirplanesInAirport = myHelper.GetAllAirplanes(name);
+            currentAirplanesAndArriving = new List<Airplane>();
         }
 
 
@@ -43,35 +50,50 @@ namespace Europe_airlines
         //    }
         //    else return false;
         //}
+        /// <summary>
+        /// Returns the number of airplanes of the current airport
+        /// </summary>
+        /// <param name="airportname"></param>
+        /// <returns></returns>
         public int GetNumberOfAirplanes(string airportname)
         {
 
-            currentAirplanes=myHelper.GetAllAirplanes(airportname);
-            return currentAirplanes.Count();
-
-
+            currentAirplanesInAirport=myHelper.GetAllAirplanes(airportname);
+            return currentAirplanesInAirport.Count();
 
         }
-
-
-        public void AddcurrentAirplane( string companyName)
+        public List<Airplane> GetCurrentAirplanes(string airportName)
         {
-            //bool value = CheckAirplane();
+            currentAirplanesInAirport = myHelper.GetAllAirplanes(airportName);
+            return currentAirplanesInAirport;
+        }
+
+        /// <summary>
+        /// Checks if there is space in the airport and adds an airplane
+        /// </summary>
+        /// <param name="companyName"></param>
+        public void AddcurrentAirplane(string companyName)
+        {
             if (GetNumberOfAirplanes(this.name) < 10)
             {
-                    myHelper.AddAnAirplane( companyName, this.name);
-                    NotifyChange();
 
-               
+                  currentAirplanesInAirport.Add(new Airplane(companyName));
+                    myHelper.AddAnAirplane(companyName, this.name);
+                    NotifyChange();    
             }
         }
+        /// <summary>
+        /// Removes and airplane, from the current airport, by the selected id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool RemoveAirplane(int id)
         {
-            foreach (Airplane a in currentAirplanes)
+            foreach (Airplane a in currentAirplanesInAirport)
             {
                 if (a.Id == id)
                 {
-                    currentAirplanes.Remove(a);
+                    currentAirplanesInAirport.Remove(a);
                     myHelper.RemoveAnAirplane(id);
                     return true;
                 }
