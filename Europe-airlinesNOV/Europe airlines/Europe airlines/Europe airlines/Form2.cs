@@ -123,13 +123,13 @@ namespace Europe_airlines
                 MessageBox.Show("The airplane is already in the chosen airport!");
                 return;
             }
-            if (cBox_desiredDestination.SelectedIndex == -1)
+            if (cBox_desiredDestination.SelectedIndex > -1)
             {
                 var selectedAirport = this.allAirports[cBox_desiredDestination.SelectedIndex];
                 var airPlane = this.airport.currentAirplanesInAirport[lb_Airplanes.SelectedIndex];
                 selectedAirport.airplanesArriving.Add(airPlane);
                 form.Focus();
-                form.DrawAirline(this.airport, selectedAirport);
+                form.DrawAirline(this.airport, selectedAirport, airPlane);
                 this.Close();
             }
             else

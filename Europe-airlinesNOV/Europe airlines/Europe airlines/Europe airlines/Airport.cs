@@ -59,8 +59,9 @@ namespace Europe_airlines
             if (GetNumberOfAirplanes(this.name) < 10)
             {
 
-                  currentAirplanesInAirport.Add(new Airplane(companyName));
+                    currentAirplanesInAirport.Add(new Airplane(companyName));
                     myHelper.AddAnAirplane(companyName, this.name);
+                    currentAirplanesInAirport = myHelper.GetAllAirplanes(name);
                     NotifyChange();    
             }
         }

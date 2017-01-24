@@ -79,7 +79,7 @@ namespace Europe_airlines
         /// <summary>
         ///  Updates the value of the label containg the information about the no of planes of each airport 
         /// </summary>
-       public void NotifyAll(int num)
+        public void NotifyAll(int num)
         {
         }
 
@@ -88,7 +88,8 @@ namespace Europe_airlines
 
         }
 
-        public void DrawAirline(Airport departureAirport, Airport arrivalAirport)
+        // Method for drawing the airplane during it
+        public void DrawAirline(Airport departureAirport, Airport arrivalAirport, Airplane ourPlane)
         {
             var timer = new System.Timers.Timer()
             {
@@ -104,16 +105,18 @@ namespace Europe_airlines
 
             Image airplane = Europe_airlines.Properties.Resources.airplane;
             var currentPoint = new Point(departureAirport.x, departureAirport.y);
+            //point for drawing the background without intersections;
+            var backgroundPoint = new Point(1, 1);
             graphics.DrawImage(airplane, currentPoint);
 
-            var initialPoint = new Point(currentAirportX,currentAirportY);
+            var initialPoint = new Point(currentAirportX, currentAirportY);
 
             timer.Start();
 
             arrivalAirport.OnStormReported += () =>
             {
                 timer.Stop();
-                DrawPoint(new Point(currentAirportX, currentAirportY), arrivalAirport.ClosestAirportObj);
+                DrawPoint(new Point(currentAirportX, currentAirportY), arrivalAirport.ClosestAirportObj, departureAirport, ourPlane);
             };
 
             timer.Elapsed += (s, e) =>
@@ -134,18 +137,26 @@ namespace Europe_airlines
                 {
                     currentAirportY -= 20;
                 }
+
+
                 var currentPoint2 = new Point(currentAirportX, currentAirportY);
+
+                graphics.DrawImage(Europe_airlines.Properties.Resources.Europe_map, backgroundPoint);
+
                 graphics.DrawImage(airplane, currentPoint2);
 
                 if ((currentAirportX - arrivalAirport.x) < 20 && (currentAirportX - arrivalAirport.x) > -20
                     && (currentAirportY - arrivalAirport.y) < 20 && (currentAirportY - arrivalAirport.y) > -20)
                 {
                     timer.Stop();
+                    departureAirport.RemoveAirplane(ourPlane.Id);
+                    arrivalAirport.AddcurrentAirplane(ourPlane.CompanyName);
+                    graphics.DrawImage(Europe_airlines.Properties.Resources.Europe_map, backgroundPoint);
                 }
             };
         }
 
-        public void DrawPoint(Point departurePoint, Airport arrivalAirport)
+        public void DrawPoint(Point departurePoint, Airport arrivalAirport, Airport departureAirport, Airplane ourPlane)
         {
             var timer = new System.Timers.Timer()
             {
@@ -158,6 +169,7 @@ namespace Europe_airlines
             var currentAirportX = departurePoint.X;
             var currentAirportY = departurePoint.Y;
 
+            Point backgroundPoint = new Point(1, 1);
 
             Image airplane = Europe_airlines.Properties.Resources.airplane;
             var currentPoint = new Point(departurePoint.X, departurePoint.Y);
@@ -187,18 +199,18 @@ namespace Europe_airlines
                 }
 
                 var currentPoint2 = new Point(currentAirportX, currentAirportY);
+
+                graphics.DrawImage(Europe_airlines.Properties.Resources.Europe_map, backgroundPoint);
                 graphics.DrawImage(airplane, currentPoint2);
 
                 if ((currentAirportX - arrivalAirport.x) < 20 && (currentAirportX - arrivalAirport.x) > -20
                     && (currentAirportY - arrivalAirport.y) < 20 && (currentAirportY - arrivalAirport.y) > -20)
                 {
                     timer.Stop();
+                    arrivalAirport.AddcurrentAirplane(ourPlane.CompanyName);
+                    departureAirport.RemoveAirplane(ourPlane.Id);
                 }
             };
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
         }
     }
 }
