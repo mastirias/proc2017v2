@@ -135,9 +135,6 @@ namespace Europe_airlines
                 {
                     currentAirportY -= 20;
                 }
-                graphics.Dispose();
-                this.BackgroundImage = Europe_airlines.Properties.Resources.Europe_map;
-                graphics = this.CreateGraphics.BackgroundImage
                 var currentPoint2 = new Point(currentAirportX, currentAirportY);
                 graphics.DrawImage(airplane, currentPoint2);
 

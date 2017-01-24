@@ -128,6 +128,7 @@ namespace Europe_airlines
             selectedAirport.airplanesArriving.Add(airPlane);
             form.Focus();
             form.DrawAirline(this.airport, selectedAirport);
+            this.Close();
         }
         public void SetAirport(Airport a,List<Airport> allAirports)
         {
