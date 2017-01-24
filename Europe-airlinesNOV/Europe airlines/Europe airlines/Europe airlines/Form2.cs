@@ -16,6 +16,7 @@ namespace Europe_airlines
         public string name;
         public int count = 100;
         private Airport airport;
+        private List<Airport> allAirports = new List<Airport>();
         Form1 form;
 
         public Form2( Form1 fo)
@@ -122,13 +123,17 @@ namespace Europe_airlines
                 MessageBox.Show("The airplane is already in the chosen airport!");
                 return;
             }
-            var selectedAirport = form.myAirport[cBox_desiredDestination.SelectedIndex];
+            var selectedAirport = this.allAirports[cBox_desiredDestination.SelectedIndex];
+            var airPlane = this.airport.currentAirplanesInAirport[lb_Airplanes.SelectedIndex];
+            selectedAirport.airplanesArriving.Add(airPlane);
             form.Focus();
             form.DrawAirline(this.airport, selectedAirport);
         }
-        public void SetAirport(Airport a)
+        public void SetAirport(Airport a,List<Airport> allAirports)
         {
             this.airport = a;
+            this.allAirports = allAirports;
+
             lb_AirportLocation.Text = this.airport.name;
             if (this.airport.currentAirplanesInAirport != null)
             {
@@ -169,15 +174,28 @@ namespace Europe_airlines
             DialogResult dialogResult = MessageBox.Show("Are you sure that you want to close the current airport, due to a storm report?", "Report Storm", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                //do something
+                this.airport.StopAirport();
             }
             else if (dialogResult == DialogResult.No)
             {
-                //do something else
+                
+            }
+        }
+
+        private void btn_reportConstruction_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure that you want to close the current airport, due to a construction?", "Report construction", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                this.airport.StopAirport();
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+
             }
         }
     }
             
-        }
+}
     
 

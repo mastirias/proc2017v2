@@ -12,7 +12,12 @@ namespace Europe_airlines
         public string ClosestAirport; //the name of the closest airport
         public int x, y; //the coordinates
         public List<Airplane> currentAirplanesInAirport; //the list of all airplanes in the current airport
-        public List<Airplane> currentAirplanesAndArriving; //the list of the current airplanes and the arriving airplanes
+        public List<Airplane> airplanesArriving = new List<Airplane>();//the list of the current airplanes and the arriving airplanes
+        public Airport ClosestAirportObj = null;
+        public bool IsWorking = true;
+
+        public Action OnStormReported;
+
         DatabaseHelper myHelper = new DatabaseHelper(); //the connection with the DataBase
         /// <summary>
         /// constructor of the Airport class
@@ -22,7 +27,7 @@ namespace Europe_airlines
         /// <param name="x"></param>
         /// <param name="y"></param>
 
-        public Airport(string name, string closeOne,int x , int y)
+        public Airport(string name, string closeOne, int x, int y)
         {
             this.name = name;
             this.ClosestAirport = closeOne;
@@ -30,31 +35,8 @@ namespace Europe_airlines
             this.y = y;
             currentAirplanesInAirport = new List<Airplane>();
             currentAirplanesInAirport = myHelper.GetAllAirplanes(name);
-            currentAirplanesAndArriving = new List<Airplane>();
         }
 
-
-
-        //public bool CheckAirplane(int createdid)
-        //{
-        //    if (allAirplanes.Count() != 0)
-        //    {
-        //        foreach (Airplane AP in allAirplanes)
-        //        {
-        //            if (AP.id == createdid)
-        //            {
-        //                return true;
-        //            }
-        //        }
-        //        return false;
-        //    }
-        //    else return false;
-        //}
-        /// <summary>
-        /// Returns the number of airplanes of the current airport
-        /// </summary>
-        /// <param name="airportname"></param>
-        /// <returns></returns>
         public int GetNumberOfAirplanes(string airportname)
         {
 
@@ -105,6 +87,12 @@ namespace Europe_airlines
         public void NotifyChange()
         {
 
+        }
+
+        public void StopAirport()
+        {
+            this.IsWorking = false;
+            this.OnStormReported();
         }
     }
 }

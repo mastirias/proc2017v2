@@ -91,6 +91,7 @@
             this.btn_reportConstruction.TabIndex = 5;
             this.btn_reportConstruction.Text = "Report construction";
             this.btn_reportConstruction.UseVisualStyleBackColor = true;
+            this.btn_reportConstruction.Click += new System.EventHandler(this.btn_reportConstruction_Click);
             // 
             // btn_AddAirplane
             // 

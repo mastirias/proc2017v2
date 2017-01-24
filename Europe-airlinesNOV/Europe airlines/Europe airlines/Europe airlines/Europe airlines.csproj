@@ -79,6 +79,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="EuroAirline.cd" />
     <None Include="Properties\Settings.settings">
@@ -98,7 +99,16 @@
     <None Include="Resources\airplane.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\airplane.png" />
+    <EmbeddedResource Include="Resources\airplane.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\airplane.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Europe map.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Europe_blank_laea_loc-0966d9.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

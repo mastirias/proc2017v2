@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Europe_airlines
 {
@@ -27,11 +28,16 @@ namespace Europe_airlines
             myAirport = new List<Airport>();
             myHelper = new DatabaseHelper();
             myAirport = myHelper.GetAllAirports();
+            foreach (var airport in this.myAirport)
+            {
+                airport.ClosestAirportObj = this.myAirport.Where(x => x.name == airport.ClosestAirport).First();
+            }
         }
 
         private void airport_click(object sender, EventArgs e)
         {
-            otherForm.SetAirport(findAirport(((Button)sender).Text));
+            var airport = findAirport(((Button)sender).Text);
+            otherForm.SetAirport(airport, this.myAirport.Where(x => x.name != airport.name).ToList());
             otherForm.Show();
         }
 
@@ -83,21 +89,12 @@ namespace Europe_airlines
 
         }
 
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-            var t = this.myAirport[0];
-            var t1 = this.myAirport[1];
-            this.DrawAirline(t, t1);
-        }
-
-
         public void DrawAirline(Airport departureAirport, Airport arrivalAirport)
         {
             var timer = new System.Timers.Timer()
             {
                 AutoReset = true,
-                Interval = 2000
+                Interval = 4000
             };
 
 
@@ -106,12 +103,72 @@ namespace Europe_airlines
             var currentAirportX = departureAirport.x;
             var currentAirportY = departureAirport.y;
 
-            //TODO JAK REMOVE
-            var rect = new Rectangle(new Point(departureAirport.x, departureAirport.y), new Size(20, 20));
-            graphics.DrawRectangle(Pens.Red, rect);
+            Image airplane = Europe_airlines.Properties.Resources.airplane;
+            var currentPoint = new Point(departureAirport.x, departureAirport.y);
+            graphics.DrawImage(airplane, currentPoint);
 
             var initialPoint = new Point(currentAirportX,currentAirportY);
-            // graphics.DrawImage(image, initialPoint);
+
+            timer.Start();
+
+            arrivalAirport.OnStormReported += () =>
+            {
+                timer.Stop();
+                DrawPoint(new Point(currentAirportX, currentAirportY), arrivalAirport.ClosestAirportObj);
+            };
+
+            timer.Elapsed += (s, e) =>
+            {
+                if (currentAirportX < arrivalAirport.x)
+                {
+                    currentAirportX += 20;
+                }
+                if (currentAirportX > arrivalAirport.x)
+                {
+                    currentAirportX -= 20;
+                }
+                if (currentAirportY < arrivalAirport.y)
+                {
+                    currentAirportY += 20;
+                }
+                if (currentAirportY > arrivalAirport.y)
+                {
+                    currentAirportY -= 20;
+                }
+                graphics.Dispose();
+                this.BackgroundImage = Europe_airlines.Properties.Resources.Europe_map;
+                graphics = this.CreateGraphics.BackgroundImage
+                var currentPoint2 = new Point(currentAirportX, currentAirportY);
+                graphics.DrawImage(airplane, currentPoint2);
+
+                if ((currentAirportX - arrivalAirport.x) < 20 && (currentAirportX - arrivalAirport.x) > -20
+                    && (currentAirportY - arrivalAirport.y) < 20 && (currentAirportY - arrivalAirport.y) > -20)
+                {
+                    timer.Stop();
+                }
+            };
+        }
+
+        public void DrawPoint(Point departurePoint, Airport arrivalAirport)
+        {
+            var timer = new System.Timers.Timer()
+            {
+                AutoReset = true,
+                Interval = 4000
+            };
+
+            var graphics = this.CreateGraphics();
+
+            var currentAirportX = departurePoint.X;
+            var currentAirportY = departurePoint.Y;
+
+
+            Image airplane = Europe_airlines.Properties.Resources.airplane;
+            var currentPoint = new Point(departurePoint.X, departurePoint.Y);
+            graphics.DrawImage(airplane, currentPoint);
+
+            var initialPoint = new Point(currentAirportX, currentAirportY);
+
             timer.Start();
 
             timer.Elapsed += (s, e) =>
@@ -133,12 +190,8 @@ namespace Europe_airlines
                     currentAirportY -= 20;
                 }
 
-                //TODO JAK REMOVE
-                var newRect = new Rectangle(new Point(currentAirportX, currentAirportY), new Size(40, 40));
-                graphics.DrawRectangle(Pens.Red, newRect);
-
-                var currentPoint = new Point(currentAirportX, currentAirportY);
-                // graphics.DrawImage(image, currentPoint);
+                var currentPoint2 = new Point(currentAirportX, currentAirportY);
+                graphics.DrawImage(airplane, currentPoint2);
 
                 if ((currentAirportX - arrivalAirport.x) < 20 && (currentAirportX - arrivalAirport.x) > -20
                     && (currentAirportY - arrivalAirport.y) < 20 && (currentAirportY - arrivalAirport.y) > -20)
