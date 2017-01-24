@@ -123,12 +123,19 @@ namespace Europe_airlines
                 MessageBox.Show("The airplane is already in the chosen airport!");
                 return;
             }
-            var selectedAirport = this.allAirports[cBox_desiredDestination.SelectedIndex];
-            var airPlane = this.airport.currentAirplanesInAirport[lb_Airplanes.SelectedIndex];
-            selectedAirport.airplanesArriving.Add(airPlane);
-            form.Focus();
-            form.DrawAirline(this.airport, selectedAirport);
-            this.Close();
+            if (cBox_desiredDestination.SelectedIndex == -1)
+            {
+                var selectedAirport = this.allAirports[cBox_desiredDestination.SelectedIndex];
+                var airPlane = this.airport.currentAirplanesInAirport[lb_Airplanes.SelectedIndex];
+                selectedAirport.airplanesArriving.Add(airPlane);
+                form.Focus();
+                form.DrawAirline(this.airport, selectedAirport);
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Please select an airplane before clicking departure!");
+            }
         }
         public void SetAirport(Airport a,List<Airport> allAirports)
         {
