@@ -8,7 +8,7 @@ using MySql.Data.MySqlClient;
 
 namespace Europe_airlines
 {
-    class DatabaseHelper
+    public class DatabaseHelper
     {
 
         public MySqlConnection connection;
@@ -31,14 +31,10 @@ namespace Europe_airlines
         {
             String sql = "SELECT COUNT(*) FROM Airplane ";
             MySqlCommand command = new MySqlCommand(sql, connection);
-            int number = 0;
             try
             {
                 connection.Open();
-                number = Convert.ToInt32(command.ExecuteScalar());
-
-                return number;
-
+                return Convert.ToInt32(command.ExecuteScalar());
             }
             catch
             {
@@ -96,7 +92,6 @@ namespace Europe_airlines
             catch (MySqlException ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message);
-
             }
             finally
             {

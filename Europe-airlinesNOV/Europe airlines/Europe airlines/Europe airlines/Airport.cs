@@ -15,6 +15,8 @@ namespace Europe_airlines
         public List<Airplane> allAirplanes = new List<Airplane>(); // the list of all airplanes
         DatabaseHelper myHelper = new DatabaseHelper(); //the connection 
 
+        public List<Airplane> incomingAirplanes = new List<Airplane>();
+
         public Airport(string name, string closeOne,int x , int y)
         {
             this.name = name;
@@ -57,7 +59,6 @@ namespace Europe_airlines
             //bool value = CheckAirplane();
             if (GetNumberOfAirplanes(this.name) < 10)
             {
-                  currentAirplanes.Add(new Airplane( companyName));
                     myHelper.AddAnAirplane( companyName, this.name);
                     NotifyChange();
 

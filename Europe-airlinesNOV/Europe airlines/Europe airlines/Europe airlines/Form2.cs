@@ -54,8 +54,8 @@ namespace Europe_airlines
 
         private void AddAirplane_Click(object sender, EventArgs e)
         {
-           
             airport.AddcurrentAirplane( textBox2.Text.ToString());
+            airport.currentAirplanes = form.myHelper.GetAiplaneSpecific(airport.name);
             this.lb_Airplanes.Items.Clear();
             foreach (Airplane a in airport.currentAirplanes)
             {
@@ -106,10 +106,6 @@ namespace Europe_airlines
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string fullText = lb_Airplanes.SelectedItem.ToString();
-            string id=fullText.Substring(3, 4);
-            tb_removeAirplanes.Text = id;
-
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -119,13 +115,14 @@ namespace Europe_airlines
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (cBox_desiredDestination.SelectedItem == airport.name)
+            if (cBox_desiredDestination.SelectedItem.ToString() == airport.name)
             {
                 MessageBox.Show("The airplane is already in the chosen airport!");
                 return;
             }
-            // do switch case with which you direct the marked airplane from the list in this airport to the list in the
-            //desired airport using form.myAirport.
+            var selectedAirport = form.myAirport[cBox_desiredDestination.SelectedIndex];
+            form.Focus();
+            form.DrawAirline(this.airport, selectedAirport);
         }
         public void SetAirport(Airport a)
         {

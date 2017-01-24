@@ -16,12 +16,9 @@ namespace Europe_airlines
         private string currentAirport; //the current airport 
         public Airplane(string newCompanyName)
         {
-            
             CompanyName = newCompanyName;
-            Id = id;
-            CurrentAirport = currentAirport;
-
         }
+
         /// <summary>
         /// properties
         /// </summary>
